@@ -16,7 +16,7 @@ async function connectDB(retries = 5, delay = 1000) {
   } catch (error) {
     if (retries > 0) {
       setTimeout(() => {
-        connectDB(retries - 1, delay * 2);
+        void connectDB(retries - 1, delay * 2);
       }, delay);
     } else if (retries === 0) {
       console.log(`Error while connection to the Data Base ${error?.message}`);
