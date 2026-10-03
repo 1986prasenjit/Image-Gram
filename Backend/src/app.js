@@ -4,6 +4,8 @@ import cors from "cors";
 
 const app = express();
 
+app.disable("x-powered-by");
+
 //This is used for cross origin resource sharing so that the client can make a request to the server and get the data it doesn't get blocked by the server
 app.use(
   cors({
