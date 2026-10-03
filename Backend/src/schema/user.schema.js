@@ -37,7 +37,21 @@ const userSchema = new Schema({
     },
     select: false // Recommended: Hides password from standard query results for security
   },
-});
+  role:{
+    type: String,
+    enum: ["user", "admin"],
+    default:"user"
+  },
+  refreshToken:{
+    type: String
+  },
+  forgetPasswordToken: {
+    type: String
+  },
+  forgetPasswordTokenExpiry: {
+    type: Date
+  },
+}, {timestamps: true});
 
 const User = models("User", userSchema);
 
