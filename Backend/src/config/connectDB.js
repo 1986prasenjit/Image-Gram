@@ -6,22 +6,24 @@ dotenv.config({
   path: "./.env",
 });
 
-async function connectDB(retries = 5, delay = 1000) {
+async function connectDB(retries = 5, delay = 2000) {
   try {
     const DB_Host = await mongoose.connect(process.env.MONGODB_URI);
 
     console.log(
-      `Database Connected Successfully and the Host is ${DB_Host.connection.host}`
+      `Database Connected Successfully and the Host is ${DB_Host.connection.host}`,
     );
   } catch (error) {
-    if (retries > 0) {
-      setTimeout(() => {
-        void connectDB(retries - 1, delay * 2);
-      }, delay);
-    } else if (retries === 0) {
-      console.log(`Error while connection to the Data Base ${error?.message}`);
+    console.log("Database Connection Failed", error.message);
+
+    if (retries === 0) {
+      console.error(`Exhausted retries. Exiting....`);
       process.exit(1);
     }
+
+    console.log(`Retrying connection is ${delay / 1000} seconds....`);
+
+    setTimeout(() => connectDB(retries - 1, delay), delay);
   }
 }
 
