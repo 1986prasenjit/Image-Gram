@@ -3,6 +3,7 @@ import User from "../schemas/user.schema.js";
 
 class UserRepository  {
 
+
     async findAll(){
         return await User.find();
     }
